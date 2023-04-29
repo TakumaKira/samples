@@ -15,23 +15,23 @@ typedef HelloWorld = void Function();
 void main() {
   // Open the dynamic library
   var libraryPath =
-      path.join(Directory.current.path, 'hello_library', 'libhello.so');
+      path.join(Directory.current.path, 'hello_rust', 'target', 'debug', 'libhello_rust.so');
 
   if (Platform.isMacOS) {
     libraryPath =
-        path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
+        path.join(Directory.current.path, 'hello_rust', 'target', 'debug', 'libhello_rust.dylib');
   }
 
   if (Platform.isWindows) {
     libraryPath = path.join(
-        Directory.current.path, 'hello_library', 'Debug', 'hello.dll');
+        Directory.current.path, 'hello_rust', 'target', 'debug', 'Debug', 'hello.dll');
   }
 
   final dylib = ffi.DynamicLibrary.open(libraryPath);
 
   // Look up the C function 'hello_world'
   final HelloWorld hello = dylib
-      .lookup<ffi.NativeFunction<HelloWorldFunc>>('hello_world')
+      .lookup<ffi.NativeFunction<HelloWorldFunc>>('hello_rust')
       .asFunction();
   // Call the function
   hello();
